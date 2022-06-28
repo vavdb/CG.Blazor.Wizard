@@ -165,6 +165,12 @@ namespace CG.Blazor.Wizard
         public Color NextColor { get; set; }
 
         /// <summary>
+        /// This property contains the caption for the next button.
+        /// </summary>
+        [Parameter]
+        public string NextCaption { get; set; } = "Next";
+
+        /// <summary>
         /// This property indicates whether the wizard should be outlined, 
         /// or not. True to outline; False otherwise.
         /// </summary>
@@ -178,9 +184,15 @@ namespace CG.Blazor.Wizard
         public Color PreviousColor { get; set; }
 
         /// <summary>
+        /// This property contains the caption for the previous button.
+        /// </summary>
+        [Parameter]
+        public string PreviousCaption { get; set; } = "Previous";        
+
+        /// <summary>
         /// This property contains a list of the current wizard panels.
         /// </summary>
-        public IReadOnlyList<MuddyWizardPanel> Panels =>  _panels.ToList();
+        public IReadOnlyList<MuddyWizardPanel> Panels => _panels.ToList();
 
         /// <summary>
         /// This property contains the index of the currently selected panel.
@@ -244,14 +256,14 @@ namespace CG.Blazor.Wizard
         /// disabled, or not. True if it should be disabled; False otherwise.
         /// </summary>
         protected bool IsPreviousDisabled => DisablePrevious ||
-            !SelectedIndex.HasValue || SelectedIndex <= 0;
+                                             !SelectedIndex.HasValue || SelectedIndex <= 0;
 
         /// <summary>
         /// This property indicates whether the next button should be
         /// disabled, or not. True if it should be disabled; False otherwise.
         /// </summary>
         protected bool IsNextDisabled => DisableNext ||
-            (!SelectedIndex.HasValue || SelectedIndex >= _panels.Count - 1);
+                                         (!SelectedIndex.HasValue || SelectedIndex >= _panels.Count - 1);
 
         /// <summary>
         /// This property indicates whether the finish button should be
@@ -265,9 +277,9 @@ namespace CG.Blazor.Wizard
         /// for the wizard header.
         /// </summary>
         protected bool ShowHeaderBorder => !string.IsNullOrEmpty(Title) ||
-            !string.IsNullOrEmpty(Description) ||
-            !string.IsNullOrEmpty(SelectedPanel?.Title) ||
-            !string.IsNullOrEmpty(SelectedPanel?.Description);
+                                           !string.IsNullOrEmpty(Description) ||
+                                           !string.IsNullOrEmpty(SelectedPanel?.Title) ||
+                                           !string.IsNullOrEmpty(SelectedPanel?.Description);
 
         #endregion
 
@@ -319,7 +331,7 @@ namespace CG.Blazor.Wizard
         /// <inheritdoc />
         public void ChipSelect(
             MuddyWizardPanel panel
-            )
+        )
         {
             // Do we have active chips?
             if (ActiveChips)
@@ -334,7 +346,7 @@ namespace CG.Blazor.Wizard
         /// <inheritdoc />
         public void Select(
             MuddyWizardPanel panel
-            )
+        )
         {
             // Get the index for the panel.
             var index = _panels.IndexOf(panel);
@@ -355,7 +367,7 @@ namespace CG.Blazor.Wizard
         /// <param name="index">The index to use for the operation.</param>
         public void Select(
             int? index
-            )
+        )
         {
             // Sanity check the index first.
             if (index == SelectedIndex)
@@ -415,7 +427,7 @@ namespace CG.Blazor.Wizard
 
             // Ensure the UI is updated.
             StateHasChanged();
-        }        
+        }
 
         #endregion
 
@@ -431,7 +443,7 @@ namespace CG.Blazor.Wizard
         /// <param name="panel">The wizard panel to add.</param>
         protected internal void AddPanel(
             MuddyWizardPanel panel
-            )
+        )
         {
             // Add the panel to the collection.
             _panels.Add(panel);
@@ -445,7 +457,7 @@ namespace CG.Blazor.Wizard
         /// <param name="panel">The wizard panel to remove.</param>
         protected internal Task RemovePanel(
             MuddyWizardPanel panel
-            )
+        )
         {
             // Remove the panel from the collection.
             _panels.Remove(panel);
@@ -511,9 +523,10 @@ namespace CG.Blazor.Wizard
             if (null != chip)
             {
                 // Look for the corresponding panel.
-                var panel = _panels.FirstOrDefault(x => 
-                    x.Title == chip.Text
-                    );
+                var panel = _panels.FirstOrDefault(
+                    x =>
+                        x.Title == chip.Text
+                );
 
                 // Did we find one?
                 if (null != panel)
