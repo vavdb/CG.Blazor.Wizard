@@ -77,6 +77,20 @@ namespace CG.Blazor.Wizard
         public Color CancelColor { get; set; }
 
         /// <summary>
+        /// This property contains the color for the cancel button.
+        /// </summary>
+        [Parameter]
+        public string CancelCaption { get; set; } = "Caption";
+
+        /// <summary>
+        /// This property contains the color for the cancel button.
+        /// </summary>
+        [Parameter]
+        public string CancelTooltip { get; set; } = "Cancel the wizard.";
+        
+        
+
+        /// <summary>
         /// This property contains the child content for the component.
         /// </summary>
         [Parameter]
@@ -126,6 +140,18 @@ namespace CG.Blazor.Wizard
         public Color FinishColor { get; set; }
 
         /// <summary>
+        /// This property contains the color for the finish button.
+        /// </summary>
+        [Parameter]
+        public string FinishCaption { get; set; } = "Finish";
+
+        /// <summary>
+        /// This property contains the color for the finish button.
+        /// </summary>
+        [Parameter]
+        public string FinishTooltip { get; set; } = "Finish the wizard.";
+        
+        /// <summary>
         /// This property contains the color for non-selected chips in the 
         /// wizard header.
         /// </summary>
@@ -171,6 +197,12 @@ namespace CG.Blazor.Wizard
         public string NextCaption { get; set; } = "Next";
 
         /// <summary>
+        /// This property contains the tooltip for the next button.
+        /// </summary>
+        [Parameter]
+        public string NextTooltip { get; set; } = "Move to the next step.";
+        
+        /// <summary>
         /// This property indicates whether the wizard should be outlined, 
         /// or not. True to outline; False otherwise.
         /// </summary>
@@ -188,11 +220,17 @@ namespace CG.Blazor.Wizard
         /// </summary>
         [Parameter]
         public string PreviousCaption { get; set; } = "Previous";        
+        
+        /// <summary>
+        /// This property contains the tooltip for the previous button.
+        /// </summary>
+        [Parameter]
+        public string PreviousTooltip { get; set; } = "Move to the previous step.";                
 
         /// <summary>
-        /// This property contains a list of the current wizard panels.
+        /// This function returns a list of the current wizard panels.
         /// </summary>
-        public IReadOnlyList<MuddyWizardPanel> Panels => _panels.ToList();
+        public IEnumerable<MuddyWizardPanel> Panels() => _panels.ToList();
 
         /// <summary>
         /// This property contains the index of the currently selected panel.
@@ -213,7 +251,7 @@ namespace CG.Blazor.Wizard
         public bool ShowCancel { get; set; }
 
         /// <summary>
-        /// Thks property indicates whether the chips should respond to user clicks,
+        /// This property indicates whether the chips should respond to user clicks,
         /// or not.
         /// </summary>
         [Parameter]
@@ -281,6 +319,13 @@ namespace CG.Blazor.Wizard
                                            !string.IsNullOrEmpty(SelectedPanel?.Title) ||
                                            !string.IsNullOrEmpty(SelectedPanel?.Description);
 
+
+        /// <summary>
+        /// Sets the style on the panel content
+        /// </summary>
+        public string PanelStyle;
+        
+        
         #endregion
 
         // *******************************************************************
@@ -399,14 +444,7 @@ namespace CG.Blazor.Wizard
                 SelectedIndex = eventArgs.NewIndex;
 
                 // Select the current panel.
-                if (eventArgs.NewIndex.HasValue)
-                {
-                    SelectedPanel = _panels[eventArgs.NewIndex.Value];
-                }
-                else
-                {
-                    SelectedPanel = null;
-                }
+                SelectedPanel = eventArgs.NewIndex.HasValue ? _panels[eventArgs.NewIndex.Value] : null;
             }
 
             // Do we have a selected panel?
@@ -415,13 +453,19 @@ namespace CG.Blazor.Wizard
                 // Should we carry the wizard title to this page?
                 if (string.IsNullOrEmpty(SelectedPanel.Title))
                 {
+#pragma warning disable BL0005
+                    // Ignore warning, we want to set the title.
                     SelectedPanel.Title = Title;
+#pragma warning restore BL0005
                 }
 
                 // Should we carry the wizard description to this page?
                 if (string.IsNullOrEmpty(SelectedPanel.Description))
                 {
+#pragma warning disable BL0005
+                    // Ignore warning, we want to set the description.
                     SelectedPanel.Description = Description;
+#pragma warning restore BL0005
                 }
             }
 
@@ -560,7 +604,7 @@ namespace CG.Blazor.Wizard
         public ValueTask DisposeAsync()
         {
             // Have we already been disposed?
-            if (_disposed == true)
+            if (_disposed)
             {
                 return ValueTask.CompletedTask;
             }

@@ -5,9 +5,9 @@
 @inherits MudComponentBase
 
 <CascadingValue Value="this" IsFixed="true">
-    <MudCard @attributes="UserAttributes" 
-             Class="@Classname" 
-             Style="@Style" 
+    <MudCard @attributes="UserAttributes"
+             Class="@Classname"
+             Style="@Style"
              Elevation="@Elevation"
              Outlined="@Outlined"
              Square="@Square">
@@ -22,19 +22,20 @@
                             <MudItem>
                                 @if (panel == SelectedPanel)
                                 {
-                                    <MudChip Size="Size.Small" 
-                                            Color="@HeaderChipSelectedColor" 
-                                            Variant="@HeaderChipVariant"
-                                            Text="@panel.Title"/> }
+                                    <MudChip Size="Size.Small"
+                                             Color="@HeaderChipSelectedColor"
+                                             Variant="@HeaderChipVariant"
+                                             Text="@panel.Title"/>
+                                }
                                 else
                                 {
-                                    <MudChip Size="Size.Small" 
-                                            Text="@panel.Title"
-                                            Variant="@HeaderChipVariant"
-                                            Color="@HeaderChipColor"
-                                            OnClick="(() => ChipSelect(panel))" /> 
+                                    <MudChip Size="Size.Small"
+                                             Text="@panel.Title"
+                                             Variant="@HeaderChipVariant"
+                                             Color="@HeaderChipColor"
+                                             OnClick="(() => ChipSelect(panel))"/>
                                 }
-                            </MudItem> 
+                            </MudItem>
                         }
                     </MudGrid>
                 }
@@ -42,73 +43,76 @@
                 {
                     if (!ShowChips)
                     {
-                        <MudText Class="mt-2 mx-2" 
+                        <MudText Class="mt-2 mx-2"
                                  Typo="@TitleTypo"
                                  Color="@TitleColor">
                             @SelectedPanel?.Title
-                        </MudText> 
+                        </MudText>
                     }
-                    <MudText Class="mt-2 mx-2" 
+                    <MudText Class="mt-2 mx-2"
                              Typo="@DescriptionTypo"
                              Color="@DescriptionColor">
                         @SelectedPanel?.Description
-                    </MudText> 
+                    </MudText>
                 }
             </MudCardHeader>
         }
 
         <MudCardContent>
-            @ChildContent
+            <MudContainer>
+                @ChildContent
+            </MudContainer>
         </MudCardContent>
 
         @if (null != SelectedIndex)
         {
-            <MudCardActions Style="border-top: 1px solid grey;">
-                <MudTooltip Text="Move to the previous step.">
-                    <MudButton OnClick="OnPrevious" 
-                            Disabled="@IsPreviousDisabled"
-                            Color="@PreviousColor"
-                            Variant="@ButtonVariant">
-                        Previous
+            <MudCardActions Style="border-top: 1px solid grey;" width="100%">
+                <MudTooltip Text="@PreviousTooltip">
+                    <MudButton OnClick="OnPrevious"
+                               Disabled="@IsPreviousDisabled"
+                               Color="@PreviousColor"
+                               Variant="@ButtonVariant">
+                        @PreviousCaption
                     </MudButton>
-			    </MudTooltip>
+                </MudTooltip>
 
                 <span style="display: flex; margin-left: auto">
                     @if (ShowCancel)
                     {
-                        <MudTooltip Text="Cancel the wizard.">
+                        <MudTooltip Text="@CancelTooltip">
                             <MudButton OnClick="OnCancel"
-                                    Class="mr-4"
-                                    Color="@CancelColor"
-                                    Variant="@ButtonVariant">
-                                Cancel
+                                       Class="mr-4"
+                                       Color="@CancelColor"
+                                       Variant="@ButtonVariant">
+                                @CancelCaption
                             </MudButton>
-				        </MudTooltip>                        
+                        </MudTooltip>
                     }
                     @if (@IsFinishVisible)
                     {
-                        <MudTooltip Text="Finish the wizard.">
+                        <MudTooltip Text="@FinishTooltip">
                             <MudButton OnClick="OnFinish"
                                        Color="@FinishColor"
                                        Disabled="@DisableNext"
                                        Variant="@ButtonVariant">
-                                Finish
+                                @FinishCaption
                             </MudButton>
-					    </MudTooltip>
+                        </MudTooltip>
                     }
                     else
                     {
-                        <MudTooltip Text="Move to the next step.">
-                            <MudButton OnClick="OnNext" 
+                        <MudTooltip Text="@NextTooltip">
+                            <MudButton OnClick="OnNext"
                                        Disabled="@IsNextDisabled"
                                        Color="@NextColor"
                                        Variant="@ButtonVariant">
-                                Next
-                            </MudButton> 
-					    </MudTooltip>
+                                @NextCaption
+                            </MudButton>
+                        </MudTooltip>
                     }
                 </span>
             </MudCardActions>
         }
     </MudCard>
 </CascadingValue> 
+
