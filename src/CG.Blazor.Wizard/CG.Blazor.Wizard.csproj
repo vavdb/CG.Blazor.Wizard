@@ -40,7 +40,7 @@ Platforms supported:
 
   <ItemGroup>
     <PackageReference Include="MudBlazor" Version="6.0.7" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.255">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.255" Condition=" '$(NBGV_Disabled)' != 'true' ">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
