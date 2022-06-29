@@ -41,25 +41,27 @@
                 }
                 @if (null != SelectedPanel)
                 {
-                    if (!ShowChips)
-                    {
+                    <MudStack row="true">
+                        @if (!ShowChips)
+                        {
+                            <MudText Class="mt-2 mx-2"
+                                     Typo="@TitleTypo"
+                                     Color="@TitleColor">
+                                @SelectedPanel?.Title
+                            </MudText>
+                        }
                         <MudText Class="mt-2 mx-2"
-                                 Typo="@TitleTypo"
-                                 Color="@TitleColor">
-                            @SelectedPanel?.Title
+                                 Typo="@DescriptionTypo"
+                                 Color="@DescriptionColor">
+                            @SelectedPanel?.Description
                         </MudText>
-                    }
-                    <MudText Class="mt-2 mx-2"
-                             Typo="@DescriptionTypo"
-                             Color="@DescriptionColor">
-                        @SelectedPanel?.Description
-                    </MudText>
+                    </MudStack>
                 }
             </MudCardHeader>
         }
 
         <MudCardContent>
-            <MudContainer>
+            <MudContainer Style="@PanelStyle">
                 @ChildContent
             </MudContainer>
         </MudCardContent>
@@ -114,5 +116,4 @@
             </MudCardActions>
         }
     </MudCard>
-</CascadingValue> 
-
+</CascadingValue>

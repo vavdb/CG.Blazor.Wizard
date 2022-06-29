@@ -56,6 +56,13 @@ namespace CG.Blazor.Wizard
         [Parameter]
         public EventCallback WizardCancelled { get; set; }
 
+        
+        /// <summary>
+        /// Sets the style on the panel content
+        /// </summary>
+        [Parameter]
+        public string PanelStyle { get; set; }
+        
         #endregion
 
         // *******************************************************************
@@ -320,10 +327,6 @@ namespace CG.Blazor.Wizard
                                            !string.IsNullOrEmpty(SelectedPanel?.Description);
 
 
-        /// <summary>
-        /// Sets the style on the panel content
-        /// </summary>
-        public string PanelStyle;
         
         
         #endregion
