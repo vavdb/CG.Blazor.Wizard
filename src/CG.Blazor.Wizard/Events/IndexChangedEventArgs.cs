@@ -23,6 +23,17 @@ namespace CG.Blazor.Wizard
         /// </summary>
         public int? CurrentIndex { get; internal set; }
 
+        
+
+        /// <summary>
+        /// This property indicates the new index.
+        /// </summary>
+        public MuddyWizardPanel NewPanel { get; set; }
+
+        /// <summary>
+        /// This property indicates the current index.
+        /// </summary>
+        public MuddyWizardPanel CurrentPanel { get; internal set; }        
         #endregion
     }
 }

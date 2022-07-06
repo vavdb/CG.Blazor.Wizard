@@ -237,7 +237,7 @@ namespace CG.Blazor.Wizard
         /// <summary>
         /// This function returns a list of the current wizard panels.
         /// </summary>
-        public IEnumerable<MuddyWizardPanel> Panels() => _panels.ToList();
+        public IList<MuddyWizardPanel> Panels() => _panels.ToList();
 
         /// <summary>
         /// This property contains the index of the currently selected panel.
@@ -427,7 +427,9 @@ namespace CG.Blazor.Wizard
             var eventArgs = new IndexChangedEventArgs()
             {
                 NewIndex = index,
-                CurrentIndex = SelectedIndex
+                NewPanel = _panels[index.Value],
+                CurrentIndex = SelectedIndex,
+                CurrentPanel = SelectedPanel,
             };
 
             // Fire the event.
